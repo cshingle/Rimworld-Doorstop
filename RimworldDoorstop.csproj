@@ -56,11 +56,12 @@
 		<Message Importance="high" Text="Embedding: @(FilesToEmbed->'%(Filename)%(Extension)', ', ')" />
 	</Target>
 
-	<Target Name="PostBuildAction" AfterTargets="Build">
-		<ItemGroup>
-			<CopyDoorstop Include="$(OutputPath)\Doorstop.dll" />
-		</ItemGroup>
-		<Copy SourceFiles="@(CopyDoorstop)" DestinationFolder="$(RIMWORLD_MOD_DIR)\.." />
-	</Target>
+	<!-- Don't copy anything -->
+	<!-- <Target Name="PostBuildAction" AfterTargets="Build"> -->
+	<!-- 	<ItemGroup> -->
+	<!-- 		<CopyDoorstop Include="$(OutputPath)\Doorstop.dll" /> -->
+	<!-- 	</ItemGroup> -->
+	<!-- 	<Copy SourceFiles="@(CopyDoorstop)" DestinationFolder="$(RIMWORLD_MOD_DIR)\.." /> -->
+	<!-- </Target> -->
 
 </Project>
