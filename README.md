@@ -6,12 +6,14 @@ Companion implementation to [Unity Doorstop](https://github.com/NeighTools/Unity
 
 # Why use it
 
-RimWorld uses Unity and the debugger server in Unity isn't available by default. Unity Doorstop fixes this and needs at least some default implementation to run. This project gives you a Doorstop.dll that you can use and has the added benefit of hot-reloading methods that are annotated with the attribute `[Reloadable]`. You can create this attribute in your own code base like this:
+RimWorld uses Unity and the debugger server in Unity isn't available by default. Unity Doorstop fixes this and needs at least some default implementation to run. ~~This project gives you a Doorstop.dll that you can use and has the added benefit of hot-reloading methods that are annotated with the attribute `[Reloadable]`. You can create this attribute in your own code base like this~~:
 
 ```cs
 [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method)]
 public class ReloadableAttribute : Attribute { }
 ```
+
+Note: I have disabled the Reloadable functionality until I can get it to work with the latest dependencies.
 
 # How to use
 
@@ -69,11 +71,11 @@ You can also use Visual Studio but you won't be able to set breakpoints in RimWo
 
 Finally, attach to the Unity debugger that runs inside RimWorld (use localhost or 127.0.0.1 and the port you configured in the .ini file) and you should be able to set breakpoints in RimWorld code and in your mod code too.
 
-Any change to a dll inside Mods will create copies of that file and they will be patched in to replace the current version. That only happens for methods that are annotated with some attribute named `[Reloadable]` so make sure you deployed that before you start the game.
+~~Any change to a dll inside Mods will create copies of that file and they will be patched in to replace the current version. That only happens for methods that are annotated with some attribute named `[Reloadable]` so make sure you deployed that before you start the game.~~
 
 ### Linux (Ubuntu based) with Rider
 
-Download the latest Linux [Unity Doorstop](https://github.com/NeighTools/UnityDoorstop/releases) Release. Make sure you grab a numbered version and not the CI Build.
+Download [Doorstop Linux Release](https://github.com/NeighTools/UnityDoorstop/releases/tag/v4.3.0). Version 4.3.0 seems to work fine as of Rimworld 1.6 release.
 Extract `/x64/libdoorstop.so` and `/x64/run.sh` into the root directory of RimWorld. The default location of the directory is usually `~/.steam/debian-installation/steamapps/common/RimWorld/`.
 
 Next, compile this project or download the release to get `Doorstop.dll` which you put into the games root directly.
@@ -82,15 +84,15 @@ Finally, you need to adjust the `run.sh` file a bit. Adjust the following lines 
 ```
 executable_name="RimWorldLinux"
 debug_enable="1"
-debug_address="127.0.0.1:50000"
+debug_address="127.0.0.1:56000"
 debug_suspend="1"
 ```
 
 Important: Make sure you compile your mod in `Debug` mode so you get `ModName.dll` and `ModName.pdb` into the Mod folder (and please don't release your mod like this!). I typically just create symbolic links to my bin/debug folder, but you can do what you like.
 
-Now start the game by running `run.sh` and then use the Run Config "Attach To Unity Player" in [Rider](https://www.jetbrains.com/rider/) with Host `127.0.0.1` on Port `50000`.
+Now start the game by running `run.sh` and then use the Run Config "Attach To Unity Player" in [Rider](https://www.jetbrains.com/rider/) with Host `127.0.0.1` on Port `56000`.
 The `debug_suspend="1"` option makes it wait until your debugger is attached to start the game, so don't panic when you don't see the game start immediately.
 
 You can now put break points in your code in Rider. You can't set breakpoints RimWorld code.
 
-Any change to a dll inside Mods will create copies of that file and they will be patched in to replace the current version. That only happens for methods that are annotated with some attribute named `[Reloadable]` so make sure you deployed that before you start the game.
+~~Any change to a dll inside Mods will create copies of that file and they will be patched in to replace the current version. That only happens for methods that are annotated with some attribute named `[Reloadable]` so make sure you deployed that before you start the game.~~
