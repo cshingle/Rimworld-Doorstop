@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Doorstop
 {
@@ -18,7 +17,6 @@ namespace Doorstop
 		{
 			foreach (var assemblyName in assemblies)
 				Assembly.Load(LoadResourceBytes(assemblyName));
-			Type.GetType("Doorstop.Reloader").GetMethod("Start").Invoke(null, null);
 		}
 
 		static byte[] LoadResourceBytes(string resourceName)
